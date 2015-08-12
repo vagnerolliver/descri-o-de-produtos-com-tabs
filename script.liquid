@@ -1,0 +1,26 @@
+{% if product.description contains "linhadecorte" %}
+ {% assign description_array = product.description | split: 'linhadecorte' %}
+ // offset 1 começa o loop apartir da segundo posição do array. // [0] é a primeira
+{% for item in description_array offset:1 %}
+ 	{% assign item_array = item | split: 'linhadetitulo' %}
+	{% contentfor description_tab %}
+  <li class="description_tab">
+    <a href="#tab-{{ forloop.index }}">{{ item_array | first | strip_html }}</a>
+  </li>
+  {% endcontentfor %}
+	{% contentfor description_content %}
+	 <div class="panel entry-content" id="tab-{{ forloop.index }}">
+    <h2>{{ item_array | first | strip_html }}</h2>
+    <div id="idTab1">
+			{{ item_array | last }}
+		</div>
+  </div>
+  {% endcontentfor %}
+{% endfor %}
+  <div class="woocommerce-tabs">
+    <ul class="tabs">
+    	{{ description_tab }}
+    </ul>
+    {{ description_content }}
+  </div>
+{% endif %}
